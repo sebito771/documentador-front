@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EasyDocs — Documentador de código</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__logo">
+      <span class="logo__bracket">{</span>
+      <span class="logo__text">EasyDocs</span>
+      <span class="logo__bracket">}</span>
+    </div>
+    <p class="header__sub">Documentación automática con IA</p>
+  </header>
+
+  <!-- TABS -->
+  <nav class="tabs">
+    <button class="tab tab--active" data-tab="codigo">
+      <span class="tab__icon">&#60;/&#62;</span> Código suelto
+    </button>
+    <button class="tab" data-tab="zip">
+      <span class="tab__icon">&#x1F4E6;</span> Archivo ZIP
+    </button>
+  </nav>
+
+  <main class="main">
+
+    <!-- ===== PANEL 1: CÓDIGO SUELTO ===== -->
+    <section id="panel-codigo" class="panel panel--active">
+
+      <div class="field">
+        <label class="label" for="input-codigo">Pega tu código fuente</label>
+        <textarea
+          id="input-codigo"
+          class="textarea"
+          placeholder="// function suma(a, b) { return a + b; }"
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <div class="field field--row">
+        <div class="field">
+          <label class="label" for="select-formato">Formato de salida</label>
+          <select id="select-formato" class="select">
+            <option value="pdf">PDF</option>
+            <option value="markdown">Markdown</option>
+            <option value="word">Word</option>
+          </select>
+        </div>
+
+        <button id="btn-descargar" class="btn btn--primary">
+          <span id="btn-descargar-text">Generar y descargar</span>
+          <span id="spinner-codigo" class="spinner hidden"></span>
+        </button>
+      </div>
+
+      <div id="msg-codigo" class="message hidden"></div>
+
+    </section>
+
+    <!-- ===== PANEL 2: ZIP ===== -->
+    <section id="panel-zip" class="panel">
+
+      <!-- Upload zone -->
+      <div class="field">
+        <label class="label">Sube tu archivo ZIP</label>
+        <div id="drop-zone" class="drop-zone">
+          <span class="drop-zone__icon">&#x1F4E6;</span>
+          <p class="drop-zone__text">Arrastra un <strong>.zip</strong> aquí o haz clic para buscar</p>
+          <input id="input-zip" type="file" accept=".zip" class="drop-zone__input" />
+        </div>
+        <p id="nombre-archivo" class="file-name hidden"></p>
+      </div>
+
+      <!-- Preview -->
+      <button id="btn-preview" class="btn btn--secondary" disabled>
+        <span id="btn-preview-text">Ver archivos del ZIP</span>
+        <span id="spinner-preview" class="spinner hidden"></span>
+      </button>
+
+      <div id="lista-archivos" class="file-list hidden"></div>
+
+      <!-- Opciones de generación -->
+      <div id="opciones-zip" class="opciones hidden">
+
+        <div class="field field--row">
+          <div class="field">
+            <label class="label" for="select-doc-type">Tipo de documentación</label>
+            <select id="select-doc-type" class="select">
+              <option value="markdown">Markdown</option>
+              <option value="pdf">PDF</option>
+              <option value="word">Word</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="input-extra">Requisitos adicionales <span class="label--optional">(opcional)</span></label>
+          <textarea
+            id="input-extra"
+            class="textarea textarea--sm"
+            placeholder="Ej: documenta en inglés, enfócate en los endpoints REST..."
+            spellcheck="false"
+          ></textarea>
+        </div>
+
+        <button id="btn-procesar-zip" class="btn btn--primary">
+          <span id="btn-procesar-text">Generar documentación</span>
+          <span id="spinner-zip" class="spinner hidden"></span>
+        </button>
+
+      </div>
+
+      <!-- Resultado -->
+      <div id="resultado-zip" class="resultado hidden">
+        <div class="resultado__header">
+          <span class="resultado__title">Documentación generada</span>
+          <div class="resultado__meta" id="meta-zip"></div>
+        </div>
+        <pre id="contenido-zip" class="resultado__content"></pre>
+        <button id="btn-copiar" class="btn btn--ghost">Copiar al portapapeles</button>
+      </div>
+
+      <div id="msg-zip" class="message hidden"></div>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span>EasyDocs API v1.1.0</span>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>
