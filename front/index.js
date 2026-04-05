@@ -3,7 +3,7 @@
    Conecta el HTML con la API del backend.
    ============================================================ */
 
-const API_BASE = 'http://documentador-api.vercel.app/api'; // Cambia esto a tu URL real
+const API_BASE = 'https://documentador-api.vercel.app/api'; // Cambia esto a tu URL real
 
 /* ============================================================
    1. UTILIDADES GENERALES
