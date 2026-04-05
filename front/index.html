@@ -29,6 +29,9 @@
     <button class="tab" data-tab="zip">
       <span class="tab__icon">&#x1F4E6;</span> Archivo ZIP
     </button>
+    <button class="tab" data-tab="archivo">
+      <span class="tab__icon">&#x1F4C4;</span> Archivo suelto
+    </button>
   </nav>
 
   <main class="main">
@@ -52,11 +55,22 @@
           <select id="select-formato" class="select">
             <option value="pdf">PDF</option>
             <option value="markdown">Markdown</option>
-            <option value="word">Word</option>
+            <option value="docx">Word</option>
           </select>
         </div>
+      </div>
 
-        <button id="btn-descargar" class="btn btn--primary">
+      <div class="field">
+        <label class="label" for="input-extra-codigo">Requisitos adicionales <span class="label--optional">(opcional)</span></label>
+        <textarea
+          id="input-extra-codigo"
+          class="textarea textarea--sm"
+          placeholder="Ej: documenta en inglés, enfócate en los endpoints REST..."
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <button id="btn-descargar" class="btn btn--primary">
           <span id="btn-descargar-text">Generar y descargar</span>
           <span id="spinner-codigo" class="spinner hidden"></span>
         </button>
@@ -97,7 +111,7 @@
             <select id="select-doc-type" class="select">
               <option value="markdown">Markdown</option>
               <option value="pdf">PDF</option>
-              <option value="word">Word</option>
+              <option value="docx">Word</option>
             </select>
           </div>
         </div>
@@ -119,17 +133,50 @@
 
       </div>
 
-      <!-- Resultado -->
-      <div id="resultado-zip" class="resultado hidden">
-        <div class="resultado__header">
-          <span class="resultado__title">Documentación generada</span>
-          <div class="resultado__meta" id="meta-zip"></div>
+      <div id="msg-zip" class="message hidden"></div>
+
+    </section>
+
+    <!-- ===== PANEL 3: ARCHIVO SUELTO ===== -->
+    <section id="panel-archivo" class="panel">
+
+      <div class="field">
+        <label class="label">Sube tu archivo de código</label>
+        <div id="drop-zone-archivo" class="drop-zone">
+          <span class="drop-zone__icon">&#x1F4C4;</span>
+          <p class="drop-zone__text">Arrastra un archivo aquí o haz clic para buscar</p>
+          <input id="input-archivo" type="file" accept=".js,.ts,.py,.java,.go,.php,.css,.html,.json,.xml,.yml,.yaml" class="drop-zone__input" />
         </div>
-        <pre id="contenido-zip" class="resultado__content"></pre>
-        <button id="btn-copiar" class="btn btn--ghost">Copiar al portapapeles</button>
+        <p id="nombre-archivo-suelto" class="file-name hidden"></p>
       </div>
 
-      <div id="msg-zip" class="message hidden"></div>
+      <div class="field field--row">
+        <div class="field">
+          <label class="label" for="select-formato-archivo">Formato de salida</label>
+          <select id="select-formato-archivo" class="select">
+            <option value="pdf">PDF</option>
+            <option value="markdown">Markdown</option>
+            <option value="docx">Word</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="input-extra-archivo">Requisitos adicionales <span class="label--optional">(opcional)</span></label>
+        <textarea
+          id="input-extra-archivo"
+          class="textarea textarea--sm"
+          placeholder="Ej: documenta en inglés, enfócate en los endpoints REST..."
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <button id="btn-descargar-archivo" class="btn btn--primary" disabled>
+        <span id="btn-descargar-archivo-text">Generar y descargar</span>
+        <span id="spinner-archivo" class="spinner hidden"></span>
+      </button>
+
+      <div id="msg-archivo" class="message hidden"></div>
 
     </section>
 

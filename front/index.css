@@ -306,10 +306,9 @@ body {
    FILE LIST (preview)
    =========================== */
 .file-list {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: .8rem 1rem;
+  padding: 4px 0;
+  border: none;
+  background: transparent;
   max-height: 180px;
   overflow-y: auto;
 }
