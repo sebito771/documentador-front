@@ -57,6 +57,26 @@ function setCargando(btn, textoEl, spinner, cargando) {
   setVisible(spinner, cargando);
 }
 
+function getExtension(docType) {
+  const map = { pdf: 'pdf', word: 'docx', markdown: 'md', multifile: 'zip' };
+  return map[docType] || 'md';
+}
+
+function getNombreArchivo(docType) {
+  const ext = getExtension(docType);
+  if (docType === 'multifile') {
+    const now = new Date();
+    const y = now.getFullYear();
+    const M = String(now.getMonth() + 1).padStart(2, '0');
+    const d = String(now.getDate()).padStart(2, '0');
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    return `documentacion_multifile_${y}${M}${d}_${h}${m}.${ext}`;
+  }
+  const fecha = new Date().toISOString().slice(0, 10);
+  return `documentacion_${fecha}.${ext}`;
+}
+
 
 /* ============================================================
    2. TABS — Cambiar entre paneles
@@ -137,10 +157,8 @@ btnDescargar.addEventListener('click', async () => {
     }
 
     // La respuesta es un blob (archivo binario)
-    const blob     = await response.blob();
-    const ext      = formato === 'pdf' ? 'pdf' : formato === 'docx' ? 'docx' : 'md';
-    const fecha    = new Date().toISOString().slice(0, 10);
-    const nombre   = `documentacion_${fecha}.${ext}`;
+    const blob   = await response.blob();
+    const nombre = getNombreArchivo(formato);
 
     descargarBlob(blob, nombre);
     mostrarMensaje(msgCodigo, `¡Documentación generada! Descargando ${nombre}...`, 'success');
@@ -415,6 +433,7 @@ btnProcesarZip.addEventListener('click', async () => {
   formData.append('file', archivoZip);
   formData.append('doc_type', selectDocType.value);
   formData.append('extra_requirements', inputExtra.value.trim());
+  formData.append('language', (navigator.language || 'es').split('-')[0]);
 
   try {
     const response = await fetch(`${API_BASE}/upload-zip`, {
@@ -429,9 +448,7 @@ btnProcesarZip.addEventListener('click', async () => {
 
     const blob = await response.blob();
     const docType = selectDocType.value;
-    const ext = docType === 'pdf' ? 'pdf' : docType === 'word' ? 'docx' : 'md';
-    const fecha = new Date().toISOString().slice(0, 10);
-    const nombre = `documentacion_${fecha}.${ext}`;
+    const nombre = getNombreArchivo(docType);
 
     descargarBlob(blob, nombre);
     mostrarMensaje(msgZip, `¡Documentación generada! Descargando ${nombre}...`, 'success');
@@ -513,10 +530,8 @@ btnDescargarArch.addEventListener('click', async () => {
       throw new Error(error.error || 'Error desconocido del servidor');
     }
 
-    const blob  = await response.blob();
-    const ext   = formato === 'pdf' ? 'pdf' : formato === 'word' ? 'docx' : 'md';
-    const fecha = new Date().toISOString().slice(0, 10);
-    const nombre = `documentacion_${fecha}.${ext}`;
+    const blob   = await response.blob();
+    const nombre = getNombreArchivo(formato);
 
     descargarBlob(blob, nombre);
     mostrarMensaje(msgArchivo, `¡Documentación generada! Descargando ${nombre}...`, 'success');
