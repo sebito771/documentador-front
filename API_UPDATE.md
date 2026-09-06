@@ -117,7 +117,7 @@ if (response.ok) {
 ```json
 // Content-Type: application/json
 {
-  "codigo": "def hello(): ...",
+  "code": "def hello(): ...",
   "extra": "Incluir ejemplos de uso",
   "language": "es"
 }
@@ -125,7 +125,7 @@ if (response.ok) {
 
 | Campo | Tipo | Obligatorio | Default |
 |-------|------|-------------|---------|
-| `codigo` | string | ✅ | — |
+| `code` | string | ✅ | — |
 | `extra` | string | ❌ | `""` |
 | `language` | string | ❌ | auto-detect (`"es"` o `"en"`) |
 

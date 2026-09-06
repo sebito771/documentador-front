@@ -134,14 +134,14 @@ btnDescargar.addEventListener('click', async () => {
   try {
     /*
      * Este endpoint acepta:
-     *   - JSON con { "codigo": "...el código fuente..." }
+      *   - JSON con { "code": "...el código fuente..." }
      *   - O un archivo directo como multipart
      * Aquí usamos JSON porque el usuario pegó texto.
      *
      * IMPORTANTE: La respuesta NO es JSON, es un archivo binario.
      * Por eso usamos response.blob() en lugar de response.json().
      */
-    const payload = { codigo };
+    const payload = { code: codigo };
     if (extra) payload.extra_requirements = extra;
 
     const response = await fetch(`${API_BASE}/download/${formato}`, {
