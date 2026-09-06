@@ -50,7 +50,7 @@ python3 -m http.server 8080 --directory front
 
 ## 🛠️ Configuración
 
-La URL base de la API se define en `front/index.js:6`:
+La URL base de la API se define en `front/js/config/api-config.js`:
 
 ```js
 const API_BASE = 'https://documentador-api.vercel.app/api';
@@ -96,17 +96,34 @@ documentador-front/
 └── front/
     ├── index.html          # Estructura (3 paneles + tabs)
     ├── index.css           # Estilos y tema oscuro
-    └── index.js            # Toda la lógica (fetch, drag & drop, UI)
+    └── js/
+        ├── app/
+        │   └── main.js     # Punto de entrada e inicialización
+        ├── config/
+        │   └── api-config.js # Configuración de la API
+        ├── core/
+        │   ├── api-client.js # Cliente HTTP y contratos de API
+        │   └── ui.js       # Utilidades visuales y descargas
+        ├── components/
+        │   └── file-drop.js # Interacción reutilizable de archivos
+        ├── navigation/
+        │   └── tabs.js     # Navegación entre paneles
+        └── features/
+            ├── code/code-flow.js # Flujo de código pegado
+            ├── zip/             # Flujo y preview de ZIP
+            └── file/file-flow.js # Flujo de archivo suelto
 ```
 
-### Arquitectura del JS (`front/index.js`)
+### Arquitectura del JS
 
 ```
-UTILIDADES  → setVisible, mostrarMensaje, descargarBlob, setCargando,
-              getExtension, getNombreArchivo
-FLUJO 1     → Código suelto → /api/download/<file_type>  (JSON)
-FLUJO 2     → ZIP → /api/preview-zip + /api/upload-zip    (multipart)
-FLUJO 3     → Archivo suelto → /api/download/<file_type>  (multipart)
+main.js       → Inicializa tabs y flujos
+api-client.js → fetch, serialización y errores de API
+ui.js         → Visibilidad, estados de carga y descargas
+file-drop.js  → Selección y drag & drop reutilizable
+code-flow.js  → Código suelto → /api/download/<file_type>  (JSON)
+zip-flow.js   → ZIP → /api/preview-zip + /api/upload-zip   (multipart)
+file-flow.js  → Archivo suelto → /api/download/<file_type> (multipart)
 ```
 
 ---
